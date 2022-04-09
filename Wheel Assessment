@@ -32,12 +32,15 @@ wheel[19] = 'bankrupt'.upper()
 
 ##### Creating Functions #####
 
-def guess():
+def guess_word():
     guess = input("Guess the word!")
+
+def guess_consonant():
+    consonant_guess = input("Guess a consonant!")
 
 def choose_word():
     global word_choice
-    word_choice = random.choice(words_text)
+    word_choice = random.choice(words_text).lower()
 
 def spin_wheel():
     global segment_number
