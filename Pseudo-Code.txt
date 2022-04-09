@@ -4,8 +4,11 @@
 		Dictionary with key of spot, value of money/BANKRUPT/Lose a Turn
 	
 	Words
+		Clean this data here
 	Vowels
+		I'll make this manually
 	Consonants
+		I'll make this manually
 	
 	Players
 		Dictionary with key of player number, value of another dictionary with round 1 bank, round 2 bank, round 3 bank (not sure if this is needed), total money/BANKRUPT/Lose
@@ -16,6 +19,8 @@
 
 Guess
 	if the input is the word, they win the round
+	
+Word choice
 
 Wheel spin function with inputs of round and player
 	go to random segment

@@ -1,16 +1,25 @@
+##### Setting Up the File #####
+
 import random
 import json
 
 words_file = open(r'Words.txt')
 words_text = words_file.read().splitlines()
 words_file.close()
+
+##### Declaring Variables #####
+
 new_word_list = []
+vowels = ['a', 'e', 'i', 'o', 'u']
+consonants = list('bcdfghjklmnpqrstvwxyz')
+
+player_info = {'Player 1':{'Round 1 bank':0, 'Round 2 Bank':0, 'Total':0}, 
+    'Player 2':{'Round 1 bank':0, 'Round 2 Bank':0, 'Total':0},
+    'Player 3':{'Round 1 bank':0, 'Round 2 Bank':0, 'Total':0}}
 
 for word in words_text:
    if word.isalpha() == True:
        new_word_list.append(word)
-
-print(new_word_list[1:5])
 
 wheel = {}
 wheel_cash_segments = range(18)
@@ -21,4 +30,17 @@ for number in wheel_cash_segments[1:]:
 wheel[18] = 'Lose a Turn'
 wheel[19] = 'bankrupt'.upper()
 
-# print(wheel)
+##### Creating Functions #####
+
+def guess():
+    guess = input("Guess the word!")
+
+def choose_word():
+    global word_choice
+    word_choice = random.choice(words_text)
+
+def spin_wheel():
+    global segment_number
+    segment_number = random.randint(1, 19)
+
+##### Round 1 #####
