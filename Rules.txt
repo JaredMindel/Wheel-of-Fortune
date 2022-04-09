@@ -1,0 +1,53 @@
+Rules:
+	When spinning the wheel, there are a few outcomes
+		Wheel lands on a number; here are the options
+			Player guesses a consonant that's in the puzzle
+				puzzles are revealed
+				they get money on the wheel (at least the entire value of their wheel spin)
+				can choose to buy a vowel for $250:
+					repeat until one of the following occurs:
+						They decide to stop  
+						They're out of money
+						Avowel they choose doesn't appear
+			Player guesses a consonant that's not in the puzzle
+				turn ends
+		Wheel lands on bankrupt:
+			player's bank goes to 0 for that round
+			turn ends
+	Player can guess word whenever they choose, assuming it's their turn:
+		If they guess correctly:
+			win the round
+			round ends
+		If they guess incorrectly:
+			their turn ends
+	There are 2 rounds with all 3 players; no more, no less than 3 players
+	the player with the most money at the end of round 2 goes onto round 3
+		Round 3 is a single player guessing with R-S-T-L-N-E revealed at the beginning
+		the player can guess 3 more consonents and 1 more vowel at no cost
+		they have one guess
+		win a cash prize if they get it right
+		Game ends
+		
+Player's Gameplay:
+	Spin wheel:
+		If the wheel selection is "Lose a Turn," end the turn
+		If the wheel selection is "BANKRUPT," reset the player's bank to 0 and end their turn
+		If the wheel selection is a dollar value, they can guess a consonant
+		If they correctly guess a consonant, they have the opportunity to buy vowels
+		Vowels take money out of the player's bank
+		If the player can still play, they may guess a word; otherwise, end their turn
+	Final Round
+		1 final round with the person with the highest bank
+		final round starts with R-S-T-L-N-E revealed
+		player can pick 3 more consonants and 1 more vowel
+		the final round should have a timer of 5 or more seconds for the player to guess that answer
+		if they get it right, show them the cash prize
+	The Wheel (24 segments)
+		One segment is labeled "BANKRUPT"
+		Many segments have cash values round to the $50 between $100 - $900
+		One segment is labeled "Lose a Turn" which causes the player's turn to end 
+		Each player spins the wheel as part of their turn to determine how much they might make from a correct guess 
+	
+				
+				
+		

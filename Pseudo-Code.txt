@@ -1,0 +1,64 @@
+# Define global variables #
+	
+	Wheel
+		Dictionary with key of spot, value of money/BANKRUPT/Lose a Turn
+	
+	Words
+	Vowels
+	Consonants
+	
+	Players
+		Dictionary with key of player number, value of another dictionary with round 1 bank, round 2 bank, round 3 bank (not sure if this is needed), total money/BANKRUPT/Lose
+
+# Define functions #
+
+# Note: to activate the guess function, there will be a boolean searching for "I want to guess the word" at every input section
+
+Guess
+	if the input is the word, they win the round
+
+Wheel spin function with inputs of round and player
+	go to random segment
+	if it hits BANKRUPT, the player will lose all of their money for that round
+		give guess option
+	if it hits Lose a Turn, the player's turn will end
+	if it hits a cash value, their bank for that round will increase by that amount
+		they'll get to guess a consonant:
+			if they're right: 
+				Show the consonants in that word alongside all characters that have already been guessed 
+				Add the amount of money from the wheel segment * the number of instances of that letter
+				let them buy a vowel if they want (give them the guess word option too):
+					if they don't, move on
+					if they do, remove $250 from their bank
+					repeat until any of the following occurs (give them the word guess option):
+						they run out of money
+						the vowel they guess doesn't appear
+						they don't want to guess anymore
+			if they're wrong: 
+				end turn
+	repeat until player guesses a consonant wrong, or they hit End Turn
+
+Menu pop-up that explains rules
+
+random_word
+	get the word via random function
+
+Wheel spin (round 1, player 1)
+wheel spin (round 1, player 2)
+wheel spin (round 1, player 3)
+
+random_word
+	get the word via random function
+
+Wheel spin (round 2, player 1)
+wheel spin (round 2, player 2)
+wheel spin (round 2, player 3)
+
+
+random_word
+	get the word via random function
+
+Just a guess, no wheel spin
+
+
+
