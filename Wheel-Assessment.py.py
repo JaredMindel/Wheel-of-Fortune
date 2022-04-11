@@ -1,3 +1,9 @@
+##### NOTES/FUTURE FIXES #####
+
+# Need to fix flow control; will need to scrap some stuff but I know what to do
+# Plan to make the UI more intuitive and clear
+# Going to fix some inputs, making them variables as opposed to simple inputs that only exist for 1 line
+
 ##### Setting Up the File #####
 
 import random
