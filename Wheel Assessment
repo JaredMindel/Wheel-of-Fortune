@@ -1,7 +1,7 @@
 ##### Setting Up the File #####
 
 import random
-import json
+from threading import Timer
 
 words_file = open(r'Words.txt')
 words_text = words_file.read().splitlines()
@@ -316,29 +316,54 @@ player_info['Player 1']['Total'] = player_info['Player 1']['Round 1 Bank'] + pla
 player_info['Player 2']['Total'] = player_info['Player 2']['Round 1 Bank'] + player_info['Player 2']['Round 2 Bank']
 player_info['Player 3']['Total'] = player_info['Player 3']['Round 1 Bank'] + player_info['Player 3']['Round 2 Bank']
 
+print(player_info)
+
 advancing_player = ''
 
 if (player_info['Player 1']['Total'] > player_info['Player 2']['Total']) and (
     player_info['Player 1']['Total'] > player_info['Player 3']['Total']):
-        advancing_player = 'Player 1'
+        advancing_player = 1
 elif (player_info['Player 2']['Total'] > player_info['Player 1']['Total']) and (
     player_info['Player 2']['Total'] > player_info['Player 3']['Total']):
-        advancing_player = 'Player 2'
+        advancing_player = 2
 elif (player_info['Player 3']['Total'] > player_info['Player 1']['Total']) and (
     player_info['Player 3']['Total'] > player_info['Player 2']['Total']):
-        advancing_player = 'Player 3'
+        advancing_player = 3
 
-print(advancing_player)
+print(f' The advancing player is Player {advancing_player}')
 
 ##### Final Round #####
 
 listed_word = []
 choose_word()
-for x in range(len(listed_word)):
-    if x.upper() in ["R", "S", "T", "L", "N", "E"]:
-        listed_word[x] = x
-print(listed_word) 
-consonant_guess()
-for letter in word_choice:
-    if consonant_guess == word_choice[letter]:
-        listed_word[letter] = consonant_guess
+for x in range(len(word_choice)):
+    if 'R'.lower() == word_choice[x]:
+        listed_word[x] = 'r'
+    if 'S'.lower() == word_choice[x]:
+        listed_word[x] = 's'
+    if 'T'.lower() == word_choice[x]:
+        listed_word[x] = "t".lower()
+    if 'l'.lower() == word_choice[x]:
+        listed_word[x] = "l".lower()
+    if 'n'.lower() == word_choice[x]:
+        listed_word[x] = "n".lower()
+    if 'e'.lower() == word_choice[x]:
+        listed_word[x] = "e".lower()
+print("".join(listed_word))
+final_vowel = input("What vowel do you want?")
+for x in range(len(word_choice)):
+    if word_choice[x].lower() == final_vowel.lower():
+        listed_word[x] = final_vowel.lower()
+print("".join(listed_word))
+
+timeout = 5
+
+t = Timer(timeout, print, ["You ran out of time! You lose!"])
+t.start()
+prompt = (f'"You have %i seconds to guess the word Guess the word. Go!' % timeout)
+final_input = input(prompt)
+t.cancel()
+if final_input.lower() == word_choice.lower():
+    print("You got it right! You receive $6 million")
+else:
+    print("You lost!")
