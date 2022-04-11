@@ -68,6 +68,7 @@ def choose_word():
 def guess_consonant():
     global guessed_correctly_value
     global consonant_guess
+    print(consonants_guessed)
     consonant_guess = input("Guess a consonant")
     if len(consonant_guess) == 1:
         if consonant_guess not in consonants and consonant_guess not in consonants_guessed:
@@ -76,38 +77,49 @@ def guess_consonant():
             guess_consonant()
         elif consonant_guess in consonants_guessed:
             print("Choose a different consonant.")
+            guess_consonant()
     elif len(consonant_guess) > 1:
-        if consonant_guess == word_choice:
+        if consonant_guess.lower() == word_choice.lower():
             print("You guessed correctly")
             guessed_correctly_value = 1
 
 def buy_vowel():
+    global all_vowels_guessed
     global round_money
     global vowels_guessed
     global vowel_chosen
-    if round_money < 250:
-        print("Oops! You don't have enough money.")
-    else:
-        print(f'Your current budget: ${round_money}')
-        vowel_chosen = input("Buy a vowel for $250")
-        if vowel_chosen not in vowels:
-            print("That's not a vowel. Pick again.")
-            buy_vowel()
-        if vowel_chosen in word_choice and vowel_chosen not in vowels_guessed:
-            vowels_guessed.append(vowel_chosen)
-            for letter_spot in range(len(word_choice)):
-                if(word_choice[letter_spot] == vowel_chosen):
-                    listed_word[letter_spot] = word_choice[letter_spot]
-            print(" ".join(listed_word))
-            if input("Would you like to guess a vowel?Y/N").upper() == "Y":
-                round_money = round_money - 250
+    global vowel_not_in_word
+    vowel_not_in_word = 0
+    if len(vowels_guessed) == 5:
+        all_vowels_guessed = 1
+    else: 
+        print(vowels_guessed)
+        if round_money < 250:
+            print("Oops! You don't have enough money.")
+        else:
+            print(f'Your current budget: ${round_money}')
+            vowel_chosen = input("Buy a vowel for $250")
+            if vowel_chosen not in vowels:
+                print("That's not a vowel. Pick again.")
                 buy_vowel()
-        elif vowel_chosen in vowels_guessed:
-            print("This vowel has already been chosen, chose another one")
-            buy_vowel()
-        else: 
-            print("That vowel is not in the word")
-            round_money = round_money - 250
+            elif vowel_chosen in word_choice and vowel_chosen not in vowels_guessed:
+                vowels_guessed.append(vowel_chosen)
+                for letter_spot in range(len(word_choice)):
+                    if(word_choice[letter_spot] == vowel_chosen):
+                        listed_word[letter_spot] = word_choice[letter_spot]
+                print(" ".join(listed_word))
+                if input("Would you like to guess a vowel?Y/N").upper() == "Y":
+                    round_money = round_money - 250
+                    buy_vowel()
+            elif vowel_chosen in vowels_guessed:
+                print("This vowel has already been chosen, chose another one.")
+                buy_vowel()
+            elif vowel_chosen not in word_choice: 
+                print("That vowel is not in the word")
+                if vowel_chosen not in vowels_guessed:
+                    vowels_guessed.append(vowel_chosen)
+                vowel_not_in_word = 1
+                print("Hey")
 
 choose_word()
 
@@ -156,7 +168,7 @@ def show_bank(player):
         print(player_info['Player 3'])
 
 player = 1
-print(consonants_guessed)
+all_vowels_guessed = 0
 
 def spin_wheel(player, round):
     global guessed_correctly_value
@@ -168,7 +180,7 @@ def spin_wheel(player, round):
 
             set_round_money(player, round)
 
-            print(" ".join(listed_word))
+            print("".join(listed_word))
 
             if player == 1 or player == 2:
                 next_player = int(player + 1)
@@ -195,39 +207,42 @@ def spin_wheel(player, round):
                     for x in range(len(listed_word)):
                         if consonant_guess == word_choice[x]:
                             listed_word[x] = consonant_guess
-                    print(" ".join(listed_word))
-                    while round_money >= 250:
-                        print(round_money)
-                        vowel_input = input("Would you like to buy a vowel? Y/N or W to guess a word word").upper()
-                        if vowel_input == 'Y':
-                            print(" ".join(listed_word))
-                            buy_vowel() 
-                            if vowel_chosen not in vowels_guessed:
+                    print("".join(listed_word))
+                    while all_vowels_guessed == 0:
+                        while round_money >= 250:
+                            print(round_money)
+                            vowel_input = input("Would you like to buy a vowel? Y/N or W to guess a word word").upper()
+                            if vowel_input == 'Y':
+                                print("".join(listed_word))
+                                buy_vowel() 
+                                if vowel_chosen not in vowels_guessed:
+                                    round_money = round_money - 250
+                                    spin_wheel(next_player, round)
                                 round_money = round_money - 250
-                                spin_wheel(next_player, round)
-                            round_money = round_money - 250
-                            set_bank(player, round, round_money)
-                            for x in range(len(listed_word)):
-                                if vowel_chosen == word_choice[x]:
-                                    listed_word[x] = vowel_chosen
-                            print(" ".join(listed_word))
-                            continue
-                        elif vowel_input == "N":
-                            break
-                        elif vowel_input == 'W':
-                            word_guess = input("What's your guess?")
-                            if word_guess == word_choice:
-                                print("You did it!!")
-                                guessed_correctly_value == 1
-                            else:
-                                print("Nope! Wrong word!")
-                                spin_wheel(next_player, round)
-                        else: 
-                            print("You're out of money! Spin the wheel again.")
-                            break
-                    spin_wheel(player, round)
-                elif consonant_guess in consonants_guessed:
-                    print("That consonant has already been guessed. Pick another")
+                                set_bank(player, round, round_money)
+                                for x in range(len(listed_word)):
+                                    if vowel_chosen == word_choice[x]:
+                                        listed_word[x] = vowel_chosen
+                                print("".join(listed_word))
+                                continue
+                            elif vowel_input == "N":
+                                break
+                            elif vowel_input == 'W':
+                                word_guess = input("What's your guess?")
+                                if word_guess.lower() == word_choice.lower():
+                                    print("You did it!!")
+                                    guessed_correctly_value == 1
+                                    break
+                                else:
+                                    print("Nope! Wrong word!")
+                                    spin_wheel(next_player, round)
+                            elif guessed_correctly_value == 1:
+                                break
+                            else: 
+                                print("You're out of money! Spin the wheel again.")
+                                break
+                    if word_guess.lower() == word_choice.lower():
+                        break
                     spin_wheel(player, round)
                 else:
                     print("That consonant is not there")
@@ -238,7 +253,7 @@ def spin_wheel(player, round):
                 print(round_money)
                 vowel_input = input("Would you like to buy a vowel? Y/N").upper()
                 if vowel_input == 'Y':
-                    print(" ".join(listed_word))
+                    print("".join(listed_word))
                     buy_vowel() 
                     if vowel_chosen not in vowels_guessed:
                         spin_wheel(next_player, round)
@@ -247,7 +262,7 @@ def spin_wheel(player, round):
                     for x in range(len(listed_word)):
                         if vowel_chosen == word_choice[x]:
                             listed_word[x] = vowel_chosen
-                    print(" ".join(listed_word))
+                    print("".join(listed_word))
                     continue
                 elif vowel_input == "N":
                     break
